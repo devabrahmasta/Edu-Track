@@ -43,7 +43,7 @@ Login memakai REST API DummyJSON supaya tetap sesuai materi HTTP Request.
 |---|---|
 | Login | `POST https://dummyjson.com/auth/login` dengan body `username` dan `password` |
 
-Response berisi token dan data user (nama, email, foto). Gunakan akun contoh dari dokumentasi DummyJSON dan cek lagi di hari pertama bahwa akunnya masih valid. Kalau API bermasalah, cadangannya login lokal dengan validasi sederhana (username dan password tetap), karena yang dinilai adalah status login tersimpan di SharedPreferences.
+Response berisi token dan data user (nama, email, foto). Akun contoh yang dipakai aplikasi saat ini adalah `emilys` / `emilyspass` (DummyJSON); cek lagi bahwa akun ini masih valid sebelum demo. Jika layanan tidak tersedia, login lokal hanya menerima akun demo yang sama, tanpa token, dan menandai sesi sebagai offline. Kredensial lain tetap ditolak.
 
 ## 3. Daftar fitur (semua wajib)
 
