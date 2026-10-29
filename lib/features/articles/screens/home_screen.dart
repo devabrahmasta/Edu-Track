@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/routes.dart';
 import '../../auth/providers/auth_provider.dart';
+import '../models/article_category.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -34,11 +35,11 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Sesi belajar kamu siap dilanjutkan.',
+              'Pilih kategori untuk mulai belajar.',
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             if (auth.user?.isOfflineSession == true) ...[
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(14),
@@ -52,11 +53,59 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ],
-            const Spacer(),
-            const Text(
-              'Beranda materi akan tersedia setelah fitur kategori dan artikel '
-              'terintegrasi.',
-              style: TextStyle(color: AppColors.muted, height: 1.5),
+            const SizedBox(height: 20),
+            Text(
+              'Kategori materi',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 12),
+            Expanded(
+              child: GridView.builder(
+                itemCount: ArticleCategory.defaults.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  childAspectRatio: 1.25,
+                ),
+                itemBuilder: (context, index) {
+                  final category = ArticleCategory.defaults[index];
+
+                  return Card(
+                    clipBehavior: Clip.antiAlias,
+                    child: InkWell(
+                      onTap: () => Navigator.of(context).pushNamed(
+                        AppRoutes.articles,
+                        arguments: category,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              category.icon,
+                              size: 36,
+                              color: AppColors.green,
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              category.name,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              '#${category.tag}',
+                              style: const TextStyle(color: AppColors.muted),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),
